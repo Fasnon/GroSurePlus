@@ -22,17 +22,24 @@ import com.squareup.picasso.Picasso
 import org.w3c.dom.Text
 
 class StoreRecyclerViewAdapter():  RecyclerView.Adapter<StoreRecyclerViewAdapter.ViewHolder>() {
-    var STORE_LIST = listOf<String>("Fairprice xTRa", "Cold Storage", "Hao Mart", "Tommy Minimart", "GIANT SUPER", "Sheng Siong")
+    var STORE_LIST = listOf<String>(
+        "Fairprice xTRa",
+        "Cold Storage",
+        "Hao Mart",
+        "Tommy Minimart",
+        "GIANT SUPER",
+        "Sheng Siong"
+    )
     var DISTANCES = listOf<String>("200m", "400m", "700m", "1300m", "1500m", "2100m")
 
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var itemName: TextView
-        var itemPicture: ImageView
+        var itemDistance: TextView
 
         init {
             itemName = itemView.findViewById(R.id.productNameCard)
-            itemPicture = itemView.findViewById(R.id.productImageCard)
+            itemDistance = itemView.findViewById(R.id.distance)
 
         }
     }
@@ -47,28 +54,7 @@ class StoreRecyclerViewAdapter():  RecyclerView.Adapter<StoreRecyclerViewAdapter
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.itemName.text = dataSet.value!![position].itemName
-        holder.itemCompany.text = dataSet.value!![position].brand
-        holder.itemPrice.text = String.format("$%.2f", dataSet.value!![position].itemPrice)
-        Picasso.get().load(dataSet.value!![position].itemPicture.toString()).into(holder.itemPicture)
-        holder.item = dataSet.value!![position]
-    }
-
-    fun setNewList(newList: MutableList<Item>) {
-        dataSet.value = newList
-        notifyDataSetChanged()
-    }
-
-    fun getLiveData(): MutableLiveData<MutableList<Item>>{
-
-        return dataSet
-    }
-
-    fun getItemsList(): MutableList<String>{
-        var temp = mutableListOf<String>()
-        for (t in dataSet.value!!) {
-            temp.add(t.itemName)
-        }
-        return  temp
+        holder.itemName.text = STORE_LIST[position]
+        holder.itemDistance.text = DISTANCES[position]
     }
 }
