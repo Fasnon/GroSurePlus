@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/trips_bg">
+
+    <TextView
+        android:id="@+id/shareTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginRight="8dp"
+        android:text="Share"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="32dp"
+        android:id="@+id/q"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/singleTripName"
+            android:layout_width="match_parent"
+            android:textStyle="bold"
+            android:layout_marginTop="32dp"
+            android:textSize="36sp"
+            android:textColor="@color/black"
+            android:text="Trip Name"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/singleTripCost"
+            android:layout_width="match_parent"
+            android:layout_marginTop="12dp"
+            android:textSize="24sp"
+            android:textColor="@color/black"
+            android:text="Total Price"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/singleTripTime"
+            android:layout_width="match_parent"
+            android:layout_marginTop="4dp"
+            android:textSize="24sp"
+            android:textColor="@color/black"
+            android:text="Time Scheduled:"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/singleTripLists"
+            android:layout_width="match_parent"
+            android:layout_marginTop="4dp"
+            android:textSize="24sp"
+            android:textColor="@color/black"
+            android:text="Lists used:"
+            android:layout_height="wrap_content"/>
+
+
+    </LinearLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginRight="12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="16dp"
+        android:id="@+id/tripItemsRV"
+        android:layout_below="@+id/q"
+        />
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="32dp"
+        android:layout_marginBottom="32dp"
+        android:backgroundTint="#42368C"
+        android:id="@+id/singleTripFAB"
+        android:src="@drawable/ic_baseline_add_24"
+        android:layout_height="wrap_content"/>
+</RelativeLayout>

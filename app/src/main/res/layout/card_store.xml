@@ -1,0 +1,41 @@
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="20dp"
+    app:strokeWidth="2dp"
+    app:strokeColor="@color/black"
+    app:cardBackgroundColor="@color/white"
+    android:layout_width="120dp"
+    android:layout_height="160dp">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+
+        <TextView
+            android:id="@+id/distance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:text="300m"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="4dp"
+            />
+
+        <TextView
+            android:textColor="@color/black"
+            android:id="@+id/storeName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="16dp"
+            android:text="Fairprice"/>
+    </RelativeLayout>
+
+
+</com.google.android.material.card.MaterialCardView>

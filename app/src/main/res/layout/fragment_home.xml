@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.inside.HomeFragment"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:id="@+id/greetingTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="72dp"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:text="Hello, USER!" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="24dp"
+        android:textSize="24sp"
+        android:textColor="@color/black"
+        android:text="Upcoming trips" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/tripsRV"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="200dp" />
+    <TextView
+        android:id="@+id/emptyPendingPrompt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="56dp"
+        android:textStyle="italic"
+        android:textSize="20sp"
+        android:textColor="#999999"
+        android:text="No upcoming trips found" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="24dp"
+        android:textSize="24sp"
+        android:textColor="@color/black"
+        android:text="Nearby stores" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginLeft="24dp"
+        android:textSize="24sp"
+        android:textColor="@color/black"
+        android:text="Insights" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="16dp"
+                android:textSize="20sp"
+                android:textStyle="italic"
+                android:id="@+id/emptyPromptInsights"
+                android:textColor="#888888"/>
+            <com.wajahatkarim3.easyflipview.EasyFlipView
+                android:layout_height="225dp"
+                android:layout_width="175dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="24dp"
+                app:flipOnTouch="true"
+                app:flipEnabled="true"
+                app:flipDuration="400"
+                android:id="@+id/mostUsedItemCardFlip"
+                app:flipFrom="right"
+                app:flipType="horizontal"
+                app:autoFlipBack="false"
+                >
+
+
+                <com.google.android.material.card.MaterialCardView
+                    app:cardCornerRadius="22dp"
+                    app:cardBackgroundColor="#E7E8FF"
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent">
+
+                    <TextView
+                        android:layout_marginTop="32dp"
+                        android:text="This checks your purchases in the past and finds out which item had the most number of quantity bought."
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="#666666"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight = "16dp"/>
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginTop="4dp"
+                        android:src="@drawable/ic_baseline_info_24"/>
+                </com.google.android.material.card.MaterialCardView>
+
+
+                <com.google.android.material.card.MaterialCardView
+                    app:cardCornerRadius="22dp"
+                    android:id="@+id/mostUsedItemCard"
+                    app:cardBackgroundColor="#FFC5C5"
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent">
+
+                    <TextView
+                        android:layout_marginTop="32dp"
+                        android:text="The item you buy the most is oil."
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="#666666"
+                        android:id="@+id/mostUsedItemTV"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight = "16dp"/>
+                </com.google.android.material.card.MaterialCardView>
+            </com.wajahatkarim3.easyflipview.EasyFlipView>
+            <com.wajahatkarim3.easyflipview.EasyFlipView
+                android:layout_height="225dp"
+                android:layout_width="175dp"
+                android:layout_alignParentRight="true"
+                app:flipOnTouch="true"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="24dp"
+                app:flipEnabled="true"
+                app:flipDuration="400"
+                android:id="@+id/mostExpensiveCardFlip"
+                app:flipFrom="right"
+                app:flipType="horizontal"
+                app:autoFlipBack="false"
+                >
+
+
+                <com.google.android.material.card.MaterialCardView
+                    app:cardCornerRadius="22dp"
+                    app:cardBackgroundColor="#E7E8FF"
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent">
+
+                    <TextView
+                        android:layout_marginTop="32dp"
+                        android:text="This checks your past trips and finds the most expensive trip."
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="#666666"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight = "16dp"/>
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginTop="4dp"
+                        android:src="@drawable/ic_baseline_info_24"/>
+                </com.google.android.material.card.MaterialCardView>
+
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_height="225dp"
+                    android:layout_width="175dp"
+                    app:cardCornerRadius="22dp"
+                    android:layout_alignParentRight="true"
+                    android:id="@+id/mostExpensiveTripCard"
+                    app:cardBackgroundColor="#B4E0FF">
+                    <TextView
+                        android:layout_marginTop="32dp"
+                        android:text="Your most     expensive trip was on 23/11/2011, where you spent $1003.42"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/mostExpensiveTripTV"
+                        android:textColor="#666666"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight = "16dp"/>
+
+
+                </com.google.android.material.card.MaterialCardView>
+            </com.wajahatkarim3.easyflipview.EasyFlipView>
+            <com.wajahatkarim3.easyflipview.EasyFlipView
+                android:layout_height="225dp"
+                android:layout_width="175dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                app:flipOnTouch="true"
+                android:layout_marginRight="16dp"
+                android:layout_below="@id/mostUsedItemCardFlip"
+                app:flipEnabled="true"
+                app:flipDuration="400"
+                android:id="@+id/mostSpentItemCardFlip"
+                app:flipFrom="right"
+                app:flipType="horizontal"
+                app:autoFlipBack="false"
+                >
+
+
+                <com.google.android.material.card.MaterialCardView
+                    app:cardCornerRadius="22dp"
+                    app:cardBackgroundColor="#E7E8FF"
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent">
+
+                    <TextView
+                        android:layout_marginTop="32dp"
+                        android:text="This checks your past trips and finds what item you have spent the most money on."
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="#666666"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight = "16dp"/>
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginTop="4dp"
+                        android:src="@drawable/ic_baseline_info_24"/>
+                </com.google.android.material.card.MaterialCardView>
+
+
+                <com.google.android.material.card.MaterialCardView android:layout_height="225dp"
+                    android:layout_width="175dp"
+                    app:cardCornerRadius="22dp"
+                    android:id="@+id/mostSpentItemCard"
+                    app:cardBackgroundColor="#C4FFCE">
+                    <TextView
+                        android:layout_marginTop="32dp"
+                        android:text="You’ve spent the most on Bread, at $120.45."
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/mostSpentItemTV"
+                        android:textColor="#666666"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight = "16dp"/>
+
+                </com.google.android.material.card.MaterialCardView>
+            </com.wajahatkarim3.easyflipview.EasyFlipView>
+
+
+            <com.wajahatkarim3.easyflipview.EasyFlipView
+                android:layout_height="225dp"
+                android:layout_width="175dp"
+                android:layout_marginLeft="16dp"
+                android:layout_alignParentRight="true"
+                app:flipOnTouch="true"
+                android:layout_below="@id/mostUsedItemCardFlip"
+                app:flipEnabled="true"
+                app:flipDuration="400"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="16dp"
+                android:id="@+id/thisWeekVsLastWeekCardFlip"
+                app:flipFrom="right"
+                app:flipType="horizontal"
+                app:autoFlipBack="false"
+                >
+
+
+                <com.google.android.material.card.MaterialCardView
+                    app:cardCornerRadius="22dp"
+                    app:cardBackgroundColor="#E7E8FF"
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent">
+
+                    <TextView
+                        android:layout_marginTop="32dp"
+                        android:text="This checks the trips you make in the last 7 days vs the week before that, and the total price of these trips added together."
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="#666666"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight = "16dp"/>
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginTop="4dp"
+                        android:src="@drawable/ic_baseline_info_24"/>
+                </com.google.android.material.card.MaterialCardView>
+
+
+
+                <com.google.android.material.card.MaterialCardView android:layout_height="225dp"
+                    android:layout_width="175dp"
+                    app:cardCornerRadius="22dp"
+                    android:layout_below="@id/mostUsedItemCardFlip"
+                    android:layout_alignParentRight="true"
+                    android:id="@+id/thisWeekVsLastWeekCard"
+                    app:cardBackgroundColor="#FFF6C4">
+                    <TextView
+                        android:layout_marginTop="32dp"
+                        android:text="You’ve spent $199.93 this week as compared to $150.02 last week, which is a 33% increase."
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/thisWeekVsLastWeekTV"
+                        android:textColor="#666566"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight = "16dp"/>
+
+
+                </com.google.android.material.card.MaterialCardView>
+            </com.wajahatkarim3.easyflipview.EasyFlipView>
+
+        </RelativeLayout>
+    </LinearLayout>
+
+</ScrollView>

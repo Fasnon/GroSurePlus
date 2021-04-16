@@ -1,0 +1,77 @@
+<com.google.android.material.card.MaterialCardView android:layout_height="284dp"
+    android:id="@+id/diseaseCardView"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="178dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="22dp"
+    app:strokeWidth="2dp"
+    app:strokeColor="@color/black"
+    android:backgroundTint="#DEDEDE"
+    android:layout_marginTop="8dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="22dp">
+
+            <ImageView
+                android:id="@+id/productImageCard"
+                android:layout_width="match_parent"
+                android:layout_height="152dp"
+                android:src="@drawable/index"
+                android:scaleType="centerCrop"/>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            >
+
+            <TextView
+                android:id="@+id/productNameCard"
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="ITEM ITEM ITEM ITEM"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textSize="21sp"/>
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/productBrandCard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:layout_marginLeft="8dp"
+            android:textColor="@color/black"
+            android:layout_marginTop="4dp"
+            android:text="No Vaccination"/>
+        <TextView
+            android:id="@+id/productPriceCard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:layout_marginLeft="8dp"
+            android:textColor="@color/black"
+            android:text="No Vaccination"/>
+
+
+
+    </LinearLayout>
+
+
+
+
+
+</com.google.android.material.card.MaterialCardView>

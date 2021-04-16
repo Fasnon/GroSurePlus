@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.example.grosure.ui.inside.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_nav_home_to_singleItemFragment"
+            app:destination="@id/singleItemFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_nav_home_to_singleTripFragment"
+            app:destination="@id/singleTripFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_settings"
+        android:name="com.example.grosure.ui.inside.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/nav_locator"
+        android:name="com.example.grosure.ui.inside.LocatorFragment"
+        android:label="fragment_locator"
+        tools:layout="@layout/fragment_locator" />
+    <fragment
+        android:id="@+id/nav_trips"
+        android:name="com.example.grosure.ui.inside.TripsFragment"
+        android:label="fragment_trips"
+        tools:layout="@layout/fragment_trips" >
+        <action
+            android:id="@+id/action_nav_trips_to_singleTripFragment"
+            app:destination="@id/singleTripFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"  />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_items"
+        android:name="com.example.grosure.ui.inside.ItemsFragment"
+        android:label="fragment_items"
+        tools:layout="@layout/fragment_items" >
+        <action
+            android:id="@+id/action_nav_items_to_scanBarcodeFragment"
+            app:destination="@id/scanBarcodeFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"  />
+        <action
+            android:id="@+id/action_nav_items_to_manualAddFragment"
+            app:destination="@id/manualAddFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_nav_items_to_singleItemFragment"
+            app:destination="@id/singleItemFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/scanBarcodeFragment"
+        android:name="com.example.grosure.ui.inside.barcode.ScanBarcodeFragment"
+        android:label="ScanBarcodeFragment"
+        tools:layout="@layout/fragment_scan_barcode">
+        <action
+            android:id="@+id/action_scanBarcodeFragment_to_successFragment"
+            app:destination="@id/successFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"  />
+    </fragment>
+    <fragment
+        android:id="@+id/successFragment"
+        android:name="com.example.grosure.ui.inside.barcode.SuccessFragment"
+        android:label="SuccessFragment"
+        tools:layout="@layout/fragment_success">
+
+
+        <argument
+            android:name="code"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_successFragment_to_nav_items"
+            app:destination="@id/nav_items"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"  />
+
+
+    </fragment>
+    <fragment
+        android:id="@+id/manualAddFragment"
+        android:name="com.example.grosure.ui.inside.ManualAddFragment"
+        android:label="ManualAddFragment"
+        tools:layout="@layout/fragment_manual">
+        <action
+            android:id="@+id/action_manualAddFragment_to_nav_items"
+            app:destination="@id/nav_items"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/singleItemFragment"
+        android:name="com.example.grosure.ui.inside.SingleItemFragment"
+        android:label="SingleItemFragment"
+        tools:layout="@layout/fragment_single_item">
+        <argument android:name="name" />
+        <action
+            android:id="@+id/action_singleItemFragment_to_nav_items"
+            app:destination="@id/nav_items"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/singleTripFragment"
+        android:name="com.example.grosure.ui.inside.SingleTripFragment"
+        android:label="SingleTripFragment"
+        tools:layout="@layout/fragment_single_trip">
+        <action
+            android:id="@+id/action_singleTripFragment_to_addItemsFragment"
+            app:destination="@id/addItemsFragment" />
+        <argument android:name="date" />
+        <argument android:name="name" />
+        <action
+            android:id="@+id/action_singleTripFragment_to_nav_trips"
+            app:destination="@id/nav_trips"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
+    </fragment>
+    <fragment
+        android:id="@+id/addItemsFragment"
+        android:name="com.example.grosure.ui.inside.AddItemsFragment"
+        android:label="AddItemsFragment"
+        tools:layout="@layout/fragment_add_trips">
+        <action
+            android:id="@+id/action_addItemsFragment_to_singleTripFragment"
+            app:destination="@id/singleTripFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"  />
+        <argument android:name="date" />
+        <argument android:name="name" />
+    </fragment>
+
+    <!--    <fragment-->
+<!--        android:id="@+id/nav_gallery"-->
+<!--        android:name="com.example.navigationdrawertest.ui.gallery.GalleryFragment"-->
+<!--        android:label="@string/menu_gallery"-->
+<!--        tools:layout="@layout/fragment_gallery" />-->
+
+<!--    <fragment-->
+<!--        android:id="@+id/nav_slideshow"-->
+<!--        android:name="com.example.navigationdrawertest.ui.slideshow.SlideshowFragment"-->
+<!--        android:label="@string/menu_slideshow"-->
+<!--        tools:layout="@layout/fragment_slideshow" />-->
+</navigation>

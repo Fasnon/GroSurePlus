@@ -1,0 +1,31 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.GroSure" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">#772E3171</item>
+        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorSecondaryVariant">@color/teal_700</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="android:activatedBackgroundIndicator">@drawable/drawer_list_selector</item>
+    </style>
+        <!-- Customize your theme here. -->
+
+        <style name="Theme.GroSure.button" parent="@style/Widget.MaterialComponents.Button">
+            <item name="colorButtonNormal"> #4F578D</item>
+            <item name="backgroundTint">#4F578D</item>
+            <item name="backgroundColor">#4F578D</item>
+            <item name="color">#4F578D</item>
+            <item name="android:textColor">#A4D5E4</item>
+            <item name="fontFamily">Roboto</item>
+            <item name="android:textSize">24sp</item>
+            <item name="android:shadowRadius">0.0</item>
+            <item name="cornerRadius">1dp</item>
+            <item name="android:textAllCaps">false</item>
+            <item name="android:textAlignment">viewStart</item>
+    </style>
+</resources>

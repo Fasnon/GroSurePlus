@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView android:layout_width="140dp"
+    android:layout_height="185dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="24dp"
+    android:backgroundTint="#878BE3"
+    android:layout_marginRight="8dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height = "wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/tripNameHomeCard"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Trip One"/>
+            <TextView
+                android:id="@+id/tripDateHomeCard"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:drawablePadding="2dp"
+                android:drawableLeft="@drawable/ic_baseline_calendar_today_24"
+                android:text="17/4,  23:15"/>
+            <TextView
+                android:id="@+id/tripPriceHomeCard"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="$1000.00"/>
+        </LinearLayout>
+
+
+
+
+
+    </RelativeLayout>
+</com.google.android.material.card.MaterialCardView>

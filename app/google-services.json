@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "964526816635",
+    "project_id": "grosure-b8b8a",
+    "storage_bucket": "grosure-b8b8a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:964526816635:android:5fb3c0ef536de1687611de",
+        "android_client_info": {
+          "package_name": "com.example.grosure"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "964526816635-fsspn1vrjjjv3om6pepaeoo3b2nehdjb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAdZXLkxWy9Fr2RVolSvpVpa6GTArZzmdU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "964526816635-fsspn1vrjjjv3om6pepaeoo3b2nehdjb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

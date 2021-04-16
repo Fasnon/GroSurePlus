@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#3060A8"
+    tools:context=".ui.inside.ProfileFragment"
+    >
+
+    <LinearLayout
+        android:layout_height="200dp"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:id="@+id/header"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="111dp"
+                android:layout_height="52dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginLeft="16dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:text="Back"
+                app:strokeColor="@color/black"
+                android:textColor="@color/white"
+                android:backgroundTint="#6E7BC1"
+                android:id="@+id/back2"
+
+                android:drawableLeft="@drawable/ic_baseline_chevron_left_24"
+                app:cornerRadius="24dp"
+                />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="80dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="80dp"
+                            android:layout_marginTop="16dp"
+                            android:layout_height="80dp"
+                            app:cardCornerRadius="40dp"
+                            app:strokeColor="@color/black"
+                            app:strokeWidth="1dp">
+
+
+                            <ImageView
+                                android:id="@+id/profileImageView"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:scaleType="fitXY"
+                                android:src="@drawable/ic_baseline_account_circle_24"/>
+
+
+                        </com.google.android.material.card.MaterialCardView>
+
+
+
+
+
+                    </LinearLayout>
+
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/userIDTextView"
+                            android:layout_width="180dp"
+                            android:layout_height="wrap_content"
+                            android:textSize="30sp"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginTop="32dp"
+                            android:text="T1234567A"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+            </RelativeLayout>
+        </RelativeLayout>
+
+
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/profile_background">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/changeUsernameBtn"
+                    style="@style/Theme.GroSure.button"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="64dp"
+                    android:layout_marginTop="44dp"
+                    android:background="@color/black"
+                    android:text="Change username" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/changePasswordBtn"
+                    style="@style/Theme.GroSure.button"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="64dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@color/black"
+                    android:text="Change password" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/infoBtn2"
+                    style="@style/Theme.GroSure.button"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="64dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@color/black"
+                    android:text="Information" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/logOutBtn"
+                    style="@style/Theme.GroSure.button"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="64dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@color/black"
+                    android:text="Log out" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/deleteAccountBtn"
+                    style="@style/Theme.GroSure.button"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="64dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@color/black"
+                    android:text="Delete account" />
+            </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/logo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="100dp"
+                android:scaleX="0.8"
+                android:scaleY="0.8"
+                android:src="@drawable/logo" />
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+
+
+</LinearLayout>
