@@ -62,7 +62,10 @@ class HomeFragment : Fragment() {
         tripHomeRV.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         var pendingTrips = mutableListOf<Trip>()
         var userTrips = mutableListOf<Trip>()
-        for (e in model.events){
+
+        requireView().findViewById<RecyclerView>(R.id.storesRV).layoutManager =  LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        requireView().findViewById<RecyclerView>(R.id.storesRV).adapter = StoreRecyclerViewAdapter()
+            for (e in model.events){
             if (e.user == model.currentUser.value!!){
                 if (e.date.isAfter(LocalDate.now())) {
                     pendingTrips.add(e)
@@ -138,8 +141,11 @@ class HomeFragment : Fragment() {
             var sdf = DateTimeFormatter.ofPattern("dd MMM yyyy")
 
             requireView().findViewById<TextView>(R.id.mostExpensiveTripTV).text = "Your most expensive trip, ${mostExTrip!!.text}, at ${String.format("$%.2f", mostExTrip!!.price)}, on ${mostExTrip!!.date.format(sdf)}"
-            requireView().findViewById<TextView>(R.id.mostUsedItemTV).text  = "The item you buy the most is " + mostQ!!.item.itemName
-            requireView().findViewById<TextView>(R.id.mostSpentItemTV).text  = "You've spent the most on ${mostC!!.item.itemName}, at ${String.format("$%.2f", mostC!!.price)}"
+
+            if (mostQ != null)
+                requireView().findViewById<TextView>(R.id.mostUsedItemTV).text  = "The item you buy the most is " + mostQ!!.item.itemName
+            if (mostC != null)
+                requireView().findViewById<TextView>(R.id.mostSpentItemTV).text  = "You've spent the most on ${mostC!!.item.itemName}, at ${String.format("$%.2f", mostC!!.price)}"
 
 
         }

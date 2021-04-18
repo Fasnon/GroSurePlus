@@ -18,6 +18,7 @@ import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
@@ -122,6 +123,13 @@ class ItemsFragment : Fragment() {
         itemsRV.adapter = ItemRecyclerViewAdapter(model.currentUserItems)
         itemsRV.layoutManager = GridLayoutManager(requireContext(), 2)
 
+        if (model.currentUserItems.value!!.isEmpty()){
+
+        }
+        else{
+            requireView().findViewById<TextView>(R.id.promptItems).visibility = View.GONE
+        }
+
 
         val nameObserver = Observer<MutableList<Item>> { newList ->
             // Update the UI, in this case, a TextView.
@@ -159,52 +167,10 @@ class ItemsFragment : Fragment() {
             writeTrips()
         }
         (itemsRV.adapter as ItemRecyclerViewAdapter).getLiveData().observe(viewLifecycleOwner, nameObserver)
-        val searchTo = requireView().findViewById<EditText>(R.id.adminDiseaseSearch)
 
-//        searchTo.addTextChangedListener(object : TextWatcher {
-//            override fun afterTextChanged(s: Editable) {
-//
-//                // you can call or do what you want with your EditText here
-//
-//                var posList = listOf<Int>()
-//                var diseaseList = (itemsRV!!.adapter as ItemRecyclerViewAdapter).getItemsList()
-//                for (a in diseaseList.indices){
-//                    Log.i(diseaseList[a].toLowerCase(), requireView().findViewById<EditText>(R.id.adminDiseaseSearch).text.toString().toLowerCase())
-//                    if (diseaseList[a].toLowerCase().contains(requireView().findViewById<EditText>(R.id.adminDiseaseSearch).text.toString().toLowerCase())){
-//                        posList += a
-//                    }
-//                }
-//
-//
-//                (itemsRV!!.adapter as ItemRecyclerViewAdapter).updateArrays(posList.toTypedArray())
-//                // yourEditText...
-//            }
-//
-//            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-//            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-//                Log.i(s.toString(), "A")
-//                // you can call or do what you want with your EditText here
-//
-//                var posList = listOf<Int>()
-//                var diseaseList = (recyclerView!!.adapter as DiseaseRecyclerViewAdapter).getDiseaseList()
-//                for (a in diseaseList.indices){
-//                    Log.i(diseaseList[a].toLowerCase(), requireView().findViewById<EditText>(R.id.adminDiseaseSearch).text.toString().toLowerCase())
-//                    if (diseaseList[a].toLowerCase().contains(requireView().findViewById<EditText>(R.id.adminDiseaseSearch).text.toString().toLowerCase())){
-//                        posList += a
-//                    }
-//                }
-//
-//
-//                (recyclerView!!.adapter as DiseaseRecyclerViewAdapter).updateArrays(posList.toTypedArray())
-//            }
-//        })
-//
-//        if (vaccineStatus == null) {
-//            vaccineStatus = Array(8) { "" }
-//        }
-//        (recyclerView!!.adapter as DiseaseRecyclerViewAdapter).setStatuses(vaccineStatus!!)
-//    }
+
     }
+
     private fun writeItems(){
         try {
             val myViewModel: GroSureViewModel by activityViewModels()

@@ -9,10 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.TextView
+import android.widget.*
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -28,6 +25,7 @@ import com.google.android.material.textfield.TextInputLayout
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_success.view.*
 import org.json.JSONObject
+import java.lang.NumberFormatException
 
 
 class SuccessFragment : Fragment() {
@@ -152,14 +150,19 @@ class SuccessFragment : Fragment() {
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)
         requestQueue.add(stringRequest)
 
+            requireView().findViewById<Button>(R.id.fragment_success_button_add_product).setOnClickListener {
+                try {
+                    Log.i("a", requireView().findViewById<TextInputLayout>(R.id.editTextTextProductPrice).editText!!.toString())
+                    model.currentUserItems.value!!.plusAssign(Item(requireView().findViewById<TextInputLayout>(R.id.editTextTextProductName).editText!!.text.toString(), requireView().findViewById<TextInputLayout>(R.id.editTextTextProductCompany).editText!!.text.toString(), requireView().findViewById<TextInputLayout>(R.id.editTextTextProductPrice).editText!!.text.toString().toDouble(), imageUrl.toString(), model.currentUser.value!!))
+                    model.itemList.value!!.plusAssign(Item(requireView().findViewById<TextInputLayout>(R.id.editTextTextProductName).editText!!.text.toString(), requireView().findViewById<TextInputLayout>(R.id.editTextTextProductCompany).editText!!.text.toString(), requireView().findViewById<TextInputLayout>(R.id.editTextTextProductPrice).editText!!.text.toString().toDouble(), imageUrl.toString(), model.currentUser.value!!))
+                    findNavController().navigate(R.id.action_successFragment_to_nav_items)
+                }
+                catch (e: Exception){
+                    Toast.makeText(requireContext(), "Make sure you filled out all the fields correctly.", Toast.LENGTH_SHORT).show()
+                }
 
-        requireView().findViewById<Button>(R.id.fragment_success_button_add_product).setOnClickListener{
-            Log.i("a",requireView().findViewById<TextInputLayout>(R.id.editTextTextProductPrice).editText!!.toString())
-            model.currentUserItems.value!!.plusAssign(Item(requireView().findViewById<TextInputLayout>(R.id.editTextTextProductName).editText!!.text.toString(), requireView().findViewById<TextInputLayout>(R.id.editTextTextProductCompany).editText!!.text.toString(), requireView().findViewById<TextInputLayout>(R.id.editTextTextProductPrice).editText!!.text.toString().toDouble(), imageUrl.toString(), model.currentUser.value!!))
-            model.itemList.value!!.plusAssign(Item(requireView().findViewById<TextInputLayout>(R.id.editTextTextProductName).editText!!.text.toString(), requireView().findViewById<TextInputLayout>(R.id.editTextTextProductCompany).editText!!.text.toString(), requireView().findViewById<TextInputLayout>(R.id.editTextTextProductPrice).editText!!.text.toString().toDouble(), imageUrl.toString(), model.currentUser.value!!))
-            findNavController().navigate(R.id.action_successFragment_to_nav_items)
+            }
 
-        }
     }
 
 }

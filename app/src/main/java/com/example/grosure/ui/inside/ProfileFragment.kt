@@ -21,6 +21,8 @@ import android.view.ViewGroup
 import android.webkit.MimeTypeMap
 import android.widget.*
 import androidx.activity.viewModels
+import androidx.camera.core.ImageCapture
+import androidx.camera.core.ImageCaptureException
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
@@ -94,13 +96,62 @@ class ProfileFragment : Fragment(){
         }
         Log.i("run", "run")
         imageView.setOnClickListener() {
-            createImageFile()
-            askFilePermissions()
-            askCameraPermissions()
+
+                val builder: AlertDialog.Builder = AlertDialog.Builder(requireContext())
+                builder.setTitle("Change photo")
+                builder.setItems(
+                        arrayOf(
+                                "Capture photo now",
+                                "Select from gallery"
+                        )
+                ) { _, item ->
+                    when (item) {
+                        0 -> {
+                            createImageFile()
+                            askFilePermissions()
+                            askCameraPermissions()
+                            // Get a stable reference of the modifiable image capture use case
+                            val imageCapture =  ImageCapture.Builder().build()
+
+                            // Create time-stamped output file to hold the image
+                            val photoFile = File(currentPhotoPath)
+
+                            // Create output options object which contains file + metadata
+                            val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
+
+                            // Set up image capture listener, which is triggered after photo has
+                            // been taken
+                            imageCapture.takePicture(
+                                    outputOptions, ContextCompat.getMainExecutor(requireContext()), object : ImageCapture.OnImageSavedCallback {
+                                override fun onError(exc: ImageCaptureException) {
+                                    Log.e("PFP Photo Error", "Photo capture failed: ${exc.message}", exc)
+                                }
+
+                                override fun onImageSaved(output: ImageCapture.OutputFileResults) {
+                                    val savedUri = Uri.fromFile(photoFile)
+                                    val msg = "Photo capture succeeded: $savedUri"
+                                    Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
+                                    Log.d("PFP Photo Saved", msg)
+                                }
+                            })
+
+                        }
+                        1 -> {
+                            val selectPhoto =
+                                    Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                            startActivityForResult(selectPhoto, 1)
+                        }
+                    }
+                }
+                builder.show()
+            }
 
 //            model.setUri(currentPhotoPath)
 
-        }
+
+
+
+
 
 
 
@@ -224,7 +275,7 @@ class ProfileFragment : Fragment(){
             photoFile.also {
                 val photoURI: Uri = FileProvider.getUriForFile(
                         requireContext(),
-                        "com.example.vizor.fileprovider",
+                        "com.example.grosure.fileprovider",
                         it
                 )
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)

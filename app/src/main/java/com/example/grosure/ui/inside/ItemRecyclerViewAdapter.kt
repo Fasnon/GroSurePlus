@@ -80,21 +80,9 @@ class ItemRecyclerViewAdapter(private var dataSet: MutableLiveData<MutableList<I
         holder.item = dataSet.value!![position]
     }
 
-    fun setNewList(newList: MutableList<Item>) {
-        dataSet.value = newList
-        notifyDataSetChanged()
-    }
-
     fun getLiveData(): MutableLiveData<MutableList<Item>>{
 
         return dataSet
     }
 
-    fun getItemsList(): MutableList<String>{
-        var temp = mutableListOf<String>()
-        for (t in dataSet.value!!) {
-            temp.add(t.itemName)
-        }
-        return  temp
-    }
 }

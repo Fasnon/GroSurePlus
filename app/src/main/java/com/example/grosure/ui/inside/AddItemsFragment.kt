@@ -81,13 +81,6 @@ class AddItemsFragment : Fragment(){
                 Log.i("added item", trip!!.text + "," + a.itemName)
             }
 
-            for (a in model.events){
-                if (a.text == trip!!.text&& a.date == trip!!.date){
-                    model.events.remove(a)
-                    model.events.add(trip!!)
-                }
-            }
-
 
             var bundle = bundleOf()
             bundle.putString("name", trip!!.text)

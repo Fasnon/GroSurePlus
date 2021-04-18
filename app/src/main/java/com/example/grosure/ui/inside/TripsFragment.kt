@@ -271,17 +271,31 @@ class TripsFragment() : Fragment() {
         else {
             selectedDate?.let {
                 val myViewModel: GroSureViewModel by activityViewModels()
-                trips[it] = trips[it].orEmpty().plus(Trip(text, it, myViewModel.currentUser.value!!,
-                    0.toDouble(),"", mutableListOf<ItemInTrip>() ))
-                updateAdapterForDate(it)
-                var t = trips.keys
-                myViewModel.events.clear()
-                for (date in t){
-                    if (trips.get(date) != null) {
-                        for (m in trips.get(date)!!) {
-                            myViewModel.events.add(m)
+                var sameName = false
+                for (events in myViewModel.events) {
+                    if (events.date == selectedDate!!) {
+                        if (events.text == text) {
+                            sameName = true
                         }
                     }
+                }
+
+                if (!sameName) {
+                    trips[it] = trips[it].orEmpty().plus(Trip(text, it, myViewModel.currentUser.value!!,
+                            0.toDouble(), "", mutableListOf<ItemInTrip>()))
+                    updateAdapterForDate(it)
+                    var t = trips.keys
+                    myViewModel.events.clear()
+                    for (date in t) {
+                        if (trips.get(date) != null) {
+                            for (m in trips.get(date)!!) {
+                                myViewModel.events.add(m)
+                            }
+                        }
+                    }
+                }
+                else{
+                    Toast.makeText(this.context, "Two events cannot have the same text on the same day.", Toast.LENGTH_SHORT).show()
                 }
             }
         }

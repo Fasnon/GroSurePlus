@@ -38,14 +38,14 @@ class StoreRecyclerViewAdapter():  RecyclerView.Adapter<StoreRecyclerViewAdapter
         var itemDistance: TextView
 
         init {
-            itemName = itemView.findViewById(R.id.productNameCard)
+            itemName = itemView.findViewById(R.id.storeName)
             itemDistance = itemView.findViewById(R.id.distance)
 
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val v = LayoutInflater.from(parent.context).inflate(R.layout.card_item, parent, false)
+        val v = LayoutInflater.from(parent.context).inflate(R.layout.card_store, parent, false)
         return ViewHolder(v)
     }
 

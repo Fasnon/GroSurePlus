@@ -1,10 +1,7 @@
 package com.example.grosure.ui.inside
 
 import android.R.attr.delay
-import android.app.AlarmManager
-import android.app.Notification
-import android.app.PendingIntent
-import android.app.TimePickerDialog
+import android.app.*
 import android.app.TimePickerDialog.OnTimeSetListener
 import android.content.Context
 import android.content.Intent
@@ -17,6 +14,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.core.app.NotificationCompat
 import androidx.core.os.bundleOf
@@ -199,6 +197,30 @@ class SingleTripFragment : Fragment(){
         }
 
 
+        val c = Calendar.getInstance()
+        val year = c.get(Calendar.YEAR)
+        val month = c.get(Calendar.MONTH)
+        val day = c.get(Calendar.DAY_OF_MONTH)
+
+        requireView().findViewById<TextView>(R.id.cloneTV).setOnClickListener{
+
+            val dpd = DatePickerDialog(requireContext(), DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                // Display Selected date in TextView
+                if (trip!= null) {
+                    var clone = Trip(trip!!.text +" 2", trip!!.date, trip!!.user, trip!!.price, trip!!.time, trip!!.itemList)
+                    var sdf = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+                    var ld = LocalDate.parse("${String.format("%02d", dayOfMonth)}/${String.format("%02d", monthOfYear+1)}/${year}", sdf)
+                    clone.date = ld
+                    model.events.add(clone)
+                    writeTrips()
+                    Toast.makeText(requireContext(), "Trip cloned to ${dayOfMonth}/${monthOfYear+1}", Toast.LENGTH_SHORT).show()
+                }
+
+//                textView.setText("" + dayOfMonth + " " + month + ", " + year)
+            }, year, month, day)
+            dpd.show()
+        }
+
 
 
     }
@@ -216,6 +238,7 @@ class SingleTripFragment : Fragment(){
                 fOut.write((stringBuild).toByteArray())
             }
             fOut.close()
+            Log.i("trips written", " single trip fragment")
         }
         catch (e : java.lang.Exception){
         }

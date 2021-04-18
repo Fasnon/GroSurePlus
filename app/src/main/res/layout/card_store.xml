@@ -2,9 +2,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="20dp"
-    app:strokeWidth="2dp"
+    app:strokeWidth="1dp"
+    android:layout_marginLeft="4dp"
     app:strokeColor="@color/black"
-    app:cardBackgroundColor="@color/white"
+    app:cardBackgroundColor="#eac4ff"
     android:layout_width="120dp"
     android:layout_height="160dp">
     <RelativeLayout
@@ -21,7 +22,7 @@
             android:layout_alignParentRight="true"
             android:text="300m"
             android:textStyle="bold"
-            android:textColor="@color/black"
+            android:textColor="#666666"
             android:textSize="16sp"
             android:layout_marginRight="16dp"
             android:layout_marginBottom="4dp"
