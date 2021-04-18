@@ -8,4 +8,4 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-data class User(var username: String, var password: String, val profilePicture: String, var notifs: Boolean) {    }
+data class User(var username: String, var password: String, var profilePicture: String, var notifs: Boolean) {    }

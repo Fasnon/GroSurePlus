@@ -95,6 +95,12 @@ class HomeFragment : Fragment() {
         }
         else{
             requireView().findViewById<TextView>(R.id.emptyPromptInsights).visibility = View.GONE
+            var today= LocalDate.now()
+            var oneWeekBefore = today.minusDays(7)
+            var twoWeeksBefore = oneWeekBefore.minusDays(7)
+
+            var moneyOneWeek = 0.0
+            var moneyTwoWeek = 0.0
             var itemComparisonList = mutableListOf<ItemForCompare>()
             for (i in model.currentUserItems.value!!){
                 itemComparisonList.add(ItemForCompare(i, 0.0, 0))
@@ -104,6 +110,12 @@ class HomeFragment : Fragment() {
             Log.i("user trip", userTrips.size.toString())
 
             for (trip in userTrips){
+                if (trip.date.isAfter(twoWeeksBefore) && trip.date.isBefore(oneWeekBefore)){
+                    moneyTwoWeek += trip.price
+                }
+                else if (trip.date.isAfter(oneWeekBefore) && trip.date.isBefore(today)){
+                    moneyOneWeek += trip.price
+                }
                 if (mostExTrip == null){
                     mostExTrip = trip
                 }
@@ -140,14 +152,13 @@ class HomeFragment : Fragment() {
 
             var sdf = DateTimeFormatter.ofPattern("dd MMM yyyy")
 
-            requireView().findViewById<TextView>(R.id.mostExpensiveTripTV).text = "Your most expensive trip, ${mostExTrip!!.text}, at ${String.format("$%.2f", mostExTrip!!.price)}, on ${mostExTrip!!.date.format(sdf)}"
+            requireView().findViewById<TextView>(R.id.mostExpensiveTripTV).text = "Your most expensive trip is ${mostExTrip!!.text}, at ${String.format("$%.2f", mostExTrip!!.price)}, on ${mostExTrip!!.date.format(sdf)}"
 
             if (mostQ != null)
                 requireView().findViewById<TextView>(R.id.mostUsedItemTV).text  = "The item you buy the most is " + mostQ!!.item.itemName
             if (mostC != null)
                 requireView().findViewById<TextView>(R.id.mostSpentItemTV).text  = "You've spent the most on ${mostC!!.item.itemName}, at ${String.format("$%.2f", mostC!!.price)}"
-
-
+            requireView().findViewById<TextView>(R.id.thisWeekVsLastWeekTV).text = "You’ve spent ${String.format("%.2f", moneyOneWeek)} this week as compared to ${String.format("%.2f", moneyTwoWeek)} last week, which is a ${String.format("%02.2f", moneyOneWeek/moneyTwoWeek*100)}% increase."
         }
         super.onViewCreated(view, savedInstanceState)
 

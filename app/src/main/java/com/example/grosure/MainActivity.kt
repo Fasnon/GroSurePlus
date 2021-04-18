@@ -67,7 +67,6 @@ class MainActivity : AppCompatActivity(){
             }
 
             myViewModel.userList.value = mutableListOf<User>()
-            temp = "true,ppp\nppp,11992222,nil,true"
 
 
             val scn = Scanner(temp)
@@ -142,6 +141,7 @@ class MainActivity : AppCompatActivity(){
                     temp = temp + cha.toString()
                 }
             }
+            Log.i("aso", temp)
 
 
             val scn = Scanner(temp)
@@ -151,13 +151,13 @@ class MainActivity : AppCompatActivity(){
 
                 var associatedUser = User("dummy", " dummy" , "dummy" , false)
                 for (t in myViewModel.userList.value!!){
-                    if (five[4] == t.username){
+                    if (five[5] == t.username){
                         associatedUser = t
                     }
                 }
 
                 if (associatedUser.profilePicture != "dummy") {
-                    myViewModel.itemList.value!!.add(Item(five[0], five[1], five[2].toDouble(), five[3], associatedUser))
+                    myViewModel.itemList.value!!.add(Item(five[0], five[1], five[2].toDouble(), five[3], five[4].toBoolean(), associatedUser))
                 }
 
             }
@@ -251,8 +251,20 @@ class MainActivity : AppCompatActivity(){
         }
 
         if (myViewModel.loggedIn.value!!){
+            try {
 
-            findNavController(R.id.navHostFragment).navigate(R.id.action_enterFragment_to_inFragment)
+                findNavController(R.id.navHostFragment).navigate(R.id.action_enterFragment_to_inFragment)
+            }
+            catch (e: Exception){
+
+                try {
+
+                    findNavController(R.id.navHostFragment).navigate(R.id.action_enterFragment_to_inFragment)
+                }
+                catch (e: Exception){
+
+                }
+            }
         }
 
 

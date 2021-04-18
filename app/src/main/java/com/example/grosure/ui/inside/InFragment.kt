@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.drawerlayout.widget.DrawerLayout
@@ -23,6 +24,8 @@ import com.example.grosure.R
 import com.example.grosure.R.layout
 import com.example.grosure.model.Item
 import com.google.android.material.navigation.NavigationView
+import com.squareup.picasso.Picasso
+import java.io.File
 
 
 class InFragment: Fragment() , View.OnClickListener {
@@ -73,6 +76,10 @@ class InFragment: Fragment() , View.OnClickListener {
         }
         header.findViewById<TextView>(R.id.usernameHeaderTV).text =
             model.currentUser.value!!.username
+
+        if (model.currentUser.value!!.profilePicture != "nil"){
+            Picasso.get().load(File(model.currentUser.value!!.profilePicture)).into(header.findViewById<ImageView>(R.id.headerPFP))
+        }
     }
 
 

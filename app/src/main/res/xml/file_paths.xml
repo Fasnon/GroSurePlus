@@ -13,6 +13,6 @@
         name="cache"
         path="."/>
     <files-path
-        name="files"
+        name="external_files"
         path="."/>
 </paths>

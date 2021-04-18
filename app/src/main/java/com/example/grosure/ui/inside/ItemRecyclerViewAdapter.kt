@@ -20,6 +20,7 @@ import com.example.grosure.R
 import com.example.grosure.model.Item
 import com.squareup.picasso.Picasso
 import org.w3c.dom.Text
+import java.io.File
 
 class ItemRecyclerViewAdapter(private var dataSet: MutableLiveData<MutableList<Item>>):  RecyclerView.Adapter<ItemRecyclerViewAdapter.ViewHolder>() {
 
@@ -76,8 +77,13 @@ class ItemRecyclerViewAdapter(private var dataSet: MutableLiveData<MutableList<I
         holder.itemName.text = dataSet.value!![position].itemName
         holder.itemCompany.text = dataSet.value!![position].brand
         holder.itemPrice.text = String.format("$%.2f", dataSet.value!![position].itemPrice)
-        Picasso.get().load(dataSet.value!![position].itemPicture.toString()).into(holder.itemPicture)
         holder.item = dataSet.value!![position]
+        if (holder.item.isFile) {
+            Picasso.get().load(File(dataSet.value!![position].itemPicture)).into(holder.itemPicture)
+        }
+        else{
+            Picasso.get().load(dataSet.value!![position].itemPicture).into(holder.itemPicture)
+        }
     }
 
     fun getLiveData(): MutableLiveData<MutableList<Item>>{

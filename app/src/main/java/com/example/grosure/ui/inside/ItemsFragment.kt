@@ -177,7 +177,7 @@ class ItemsFragment : Fragment() {
             val fOut = requireContext().openFileOutput("items", Context.MODE_PRIVATE)
             for (a: Item in myViewModel.itemList.value!!) {
 
-                fOut.write((a.itemName + "," + a.brand + "," + a.itemPrice.toString() + "," + a.itemPicture.toString() +"," + a.user.username +"\n").toByteArray())
+                fOut.write((a.itemName + "," + a.brand + "," + a.itemPrice.toString() + "," + a.itemPicture.toString() +"," + a.isFile.toString() + "," + a.user.username +"\n").toByteArray())
             }
             if (myViewModel.itemList.value!!.isEmpty()){
                 fOut.write("".toByteArray())

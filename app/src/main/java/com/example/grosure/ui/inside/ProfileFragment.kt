@@ -21,6 +21,7 @@ import android.view.ViewGroup
 import android.webkit.MimeTypeMap
 import android.widget.*
 import androidx.activity.viewModels
+import androidx.camera.core.CameraX
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
 import androidx.core.app.ActivityCompat
@@ -38,6 +39,7 @@ import com.example.grosure.R
 import com.example.grosure.model.Item
 import com.example.grosure.model.Trip
 import com.example.grosure.model.User
+import com.squareup.picasso.Picasso
 import org.w3c.dom.Text
 import java.io.File
 import java.io.IOException
@@ -51,10 +53,6 @@ class ProfileFragment : Fragment(){
     lateinit var currentPhotoPath: String
     private lateinit var navController: NavController
 
-    private lateinit var changePasswordBtn: Button
-    private lateinit var informationBtn: Button
-    private lateinit var logOutBtn: Button
-    private lateinit var deleteAccountBtn: Button
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val model: GroSureViewModel by activityViewModels()
@@ -94,6 +92,11 @@ class ProfileFragment : Fragment(){
             imageView.setImageURI(currentPhotoPath.toUri()
             )
         }
+
+        if (model.currentUser.value!!.profilePicture != "nil"){
+            Picasso.get().load(File(model.currentUser.value!!.profilePicture)).into(imageView)
+
+        }
         Log.i("run", "run")
         imageView.setOnClickListener() {
 
@@ -101,46 +104,47 @@ class ProfileFragment : Fragment(){
                 builder.setTitle("Change photo")
                 builder.setItems(
                         arrayOf(
-                                "Capture photo now",
+                                "Capture photo using camera",
                                 "Select from gallery"
                         )
                 ) { _, item ->
                     when (item) {
-                        0 -> {
-                            createImageFile()
-                            askFilePermissions()
-                            askCameraPermissions()
-                            // Get a stable reference of the modifiable image capture use case
-                            val imageCapture =  ImageCapture.Builder().build()
-
-                            // Create time-stamped output file to hold the image
-                            val photoFile = File(currentPhotoPath)
-
-                            // Create output options object which contains file + metadata
-                            val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
-
-                            // Set up image capture listener, which is triggered after photo has
-                            // been taken
-                            imageCapture.takePicture(
-                                    outputOptions, ContextCompat.getMainExecutor(requireContext()), object : ImageCapture.OnImageSavedCallback {
-                                override fun onError(exc: ImageCaptureException) {
-                                    Log.e("PFP Photo Error", "Photo capture failed: ${exc.message}", exc)
+                            0 -> {
+                                if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                                    ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.CAMERA), 101)
                                 }
-
-                                override fun onImageSaved(output: ImageCapture.OutputFileResults) {
-                                    val savedUri = Uri.fromFile(photoFile)
-                                    val msg = "Photo capture succeeded: $savedUri"
-                                    Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
-                                    Log.d("PFP Photo Saved", msg)
+                                askFilePermissions()
+                                createImageFile()
+                                Intent(MediaStore.ACTION_IMAGE_CAPTURE).also {takePictureIntent ->
+                                    // Ensure that there's a camera activity to handle the intent
+                                    takePictureIntent.resolveActivity(requireContext().packageManager)?.also {
+                                        // Create the File where the photo should go
+                                        Log.i("100", "72")
+                                    }
+                                    val photoFile: File = File(currentPhotoPath)
+                                    Log.i("4",photoFile.absolutePath)
+//                // Continue only if the File was successfully created
+                                    photoFile.also {
+                                        val photoURI: Uri = FileProvider.getUriForFile(
+                                                requireContext(),
+                                                "com.example.grosure.fileprovider",
+                                                it
+                                        )
+                                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+                                    }
+                                    Log.i("23", "100")
+                                    startActivityForResult(takePictureIntent, 0)
                                 }
-                            })
-
-                        }
-                        1 -> {
-                            val selectPhoto =
-                                    Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-                            startActivityForResult(selectPhoto, 1)
-                        }
+                            }
+                            1 -> {
+                                if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                                    ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.CAMERA), 101)
+                                }
+                                askFilePermissions()
+                                val selectPhoto =
+                                        Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                                startActivityForResult(selectPhoto, 1)
+                            }
                     }
                 }
                 builder.show()
@@ -178,14 +182,6 @@ class ProfileFragment : Fragment(){
 
     }
 
-
-    fun askCameraPermissions() {
-        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.CAMERA), 101)
-        } else {
-            dispatchTakePictureIntent()
-        }
-    }
     fun askFilePermissions() {
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 105)
@@ -200,7 +196,6 @@ class ProfileFragment : Fragment(){
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == 101){
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                dispatchTakePictureIntent()
             }
             else{
                 Toast.makeText(requireContext(), "Camera is needed to submit image", Toast.LENGTH_LONG).show()
@@ -212,21 +207,28 @@ class ProfileFragment : Fragment(){
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_IMAGE_CAPTURE){
+        if (requestCode == 0){
             if (resultCode == Activity.RESULT_OK){
+                data!!
                 var f = File(currentPhotoPath)
-                imageView.setImageURI(Uri.fromFile(f))
+                Picasso.get().load(f).into(imageView)
 
     //                val myBitmap = BitmapFactory.decodeFile(currentPhotoPath)
     //                        imageView.setImageBitmap(myBitmap)
-
+                val model: GroSureViewModel by activityViewModels()
+                var temp = model.currentUser.value!!
+                var temp2 = User(model.currentUser.value!!.username, model.currentUser.value!!.password, currentPhotoPath, model.currentUser.value!!.notifs)
+                model.userList.value!!.remove(temp)
+                model.userList.value!!.add(temp2)
+                model.currentUser.value = temp2
+                writeUsers()
                 var mediaScanIntent = Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE)
                 var contentUri = Uri.fromFile(f)
                 mediaScanIntent.setData(contentUri)
                 requireActivity().sendBroadcast(mediaScanIntent)
             }
         }
-        if (requestCode == 998){
+        if (requestCode == 1){
             if (resultCode == Activity.RESULT_OK){
                 var uriContentUri =  data!!.data!!
                 val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
@@ -236,7 +238,13 @@ class ProfileFragment : Fragment(){
                 currentPhotoPath = this!!.getPath(requireContext(), uriContentUri)
     //                val myBitmap = BitmapFactory.decodeFile(currentPhotoPath)
     //                        imageView.setImageBitmap(myBitmap)
-
+                val model: GroSureViewModel by activityViewModels()
+                var temp = model.currentUser.value!!
+                var temp2 = User(model.currentUser.value!!.username, model.currentUser.value!!.password, currentPhotoPath, model.currentUser.value!!.notifs)
+                model.userList.value!!.remove(temp)
+                model.userList.value!!.add(temp2)
+                model.currentUser.value = temp2
+                writeUsers()
             }
 
         }
@@ -257,31 +265,6 @@ class ProfileFragment : Fragment(){
             // Save a file: path for use with ACTION_VIEW intents
             currentPhotoPath = absolutePath
             Log.i("2", currentPhotoPath)
-        }
-    }
-
-    private var REQUEST_IMAGE_CAPTURE = 102
-
-    private fun dispatchTakePictureIntent() {
-        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
-            // Ensure that there's a camera activity to handle the intent
-            takePictureIntent.resolveActivity(requireActivity().packageManager)?.also {
-                // Create the File where the photo should go
-                Log.i("100", "72")
-            }
-            val photoFile: File = File(currentPhotoPath)
-            Log.i("4", photoFile.absolutePath)
-    //                // Continue only if the File was successfully created
-            photoFile.also {
-                val photoURI: Uri = FileProvider.getUriForFile(
-                        requireContext(),
-                        "com.example.grosure.fileprovider",
-                        it
-                )
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-            }
-            Log.i("23", "100")
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
         }
     }
 
@@ -464,8 +447,8 @@ class ProfileFragment : Fragment(){
 
                 if (a.user in myViewModel.userList.value!!) {
 
-                    fOut.write((a.itemName + "," + a.brand + "," + a.itemPrice.toString() + "," + a.itemPicture.toString() + "," + a.user.username + "\n").toByteArray())
-                }
+                        fOut.write((a.itemName + "," + a.brand + "," + a.itemPrice.toString() + "," + a.itemPicture.toString() +"," + a.isFile.toString() + "," + a.user.username +"\n").toByteArray())
+                    }
             }
             if (myViewModel.itemList.value!!.isEmpty()){
                 fOut.write("".toByteArray())
@@ -496,7 +479,6 @@ class ProfileFragment : Fragment(){
         catch (e : java.lang.Exception){
         }
     }
-
     private fun writeTrips(){
         try {
             val myViewModel: GroSureViewModel by activityViewModels()

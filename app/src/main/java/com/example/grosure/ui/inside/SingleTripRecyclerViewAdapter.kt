@@ -26,6 +26,7 @@ import com.example.grosure.model.Trip
 import com.shawnlin.numberpicker.NumberPicker
 import com.squareup.picasso.Picasso
 import org.w3c.dom.Text
+import java.io.File
 
 class SingleTripRecyclerViewAdapter(private var trip: Trip, private var dataSet: MutableList<ItemInTrip>, private var ChangeDetector: MutableLiveData<Boolean>):  RecyclerView.Adapter<SingleTripRecyclerViewAdapter.ViewHolder>() {
 
@@ -84,10 +85,15 @@ class SingleTripRecyclerViewAdapter(private var trip: Trip, private var dataSet:
         holder.itemName.text = dataSet[position].item.itemName
         holder.itemCompany.text = dataSet[position].item.brand
         holder.itemPrice.text = String.format("$%.2f", dataSet[position].item.itemPrice)
-        Picasso.get().load(dataSet[position].item.itemPicture.toString()).into(holder.itemPicture)
         holder.itemTotalPrice.text = String.format("Total Price: $%.2f", dataSet[position].item.itemPrice * dataSet[position].number)
         holder.itemInTrip = dataSet[position]
         holder.itemQuantity.value = dataSet[position].number
+        if (holder.itemInTrip.item.isFile) {
+            Picasso.get().load(File(dataSet[position].item.itemPicture)).into(holder.itemPicture)
+        }
+        else{
+            Picasso.get().load(dataSet[position].item.itemPicture).into(holder.itemPicture)
+        }
 
     }
 

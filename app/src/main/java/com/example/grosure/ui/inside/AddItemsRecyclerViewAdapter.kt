@@ -22,6 +22,7 @@ import com.example.grosure.model.Item
 import com.example.grosure.model.ItemInGetItem
 import com.squareup.picasso.Picasso
 import org.w3c.dom.Text
+import java.io.File
 
 class AddItemsRecyclerViewAdapter(private var dataSet: MutableList<ItemInGetItem>):  RecyclerView.Adapter<AddItemsRecyclerViewAdapter.ViewHolder>() {
 
@@ -71,8 +72,13 @@ class AddItemsRecyclerViewAdapter(private var dataSet: MutableList<ItemInGetItem
         holder.itemName.text = dataSet[position].item.itemName
         holder.itemCompany.text = dataSet[position].item.brand
         holder.itemPrice.text = String.format("$%.2f", dataSet[position].item.itemPrice)
-        Picasso.get().load(dataSet[position].item.itemPicture.toString()).into(holder.itemPicture)
         holder.itemInGetItem = dataSet[position]
+        if (holder.itemInGetItem.item.isFile) {
+            Picasso.get().load(File(dataSet[position].item.itemPicture)).into(holder.itemPicture)
+        }
+        else{
+            Picasso.get().load(dataSet[position].item.itemPicture).into(holder.itemPicture)
+        }
     }
 
     fun setNewList(newList: MutableList<ItemInGetItem>) {
