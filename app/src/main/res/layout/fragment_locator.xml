@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
     android:layout_height="match_parent"
     tools:context=".ui.inside.LocatorFragment">
 
     <!-- TODO: Update blank fragment layout -->
 
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
     <EditText
         android:id="@+id/locatorSearch"
         android:layout_marginLeft="48dp"
@@ -35,5 +38,16 @@
         tools:context=".MapsActivity"
         android:name="com.google.android.gms.maps.SupportMapFragment" />
 
+    </LinearLayout>
 
-</LinearLayout>
+
+    <com.github.appintro.indicator.ProgressIndicatorController
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="24dp"
+        android:id="@+id/progressIndicator"
+        android:indeterminate="true"
+        android:layout_height="24dp"/>
+
+
+</RelativeLayout>

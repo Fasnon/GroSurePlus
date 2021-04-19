@@ -79,12 +79,21 @@ class SingleItemFragment : Fragment(){
         requireView().findViewById<TextInputLayout>(R.id.editTextTextProductPriceEdit).editText!!.setText(String.format("%.2f",item.itemPrice))
 
         requireView().findViewById<Button>(R.id.fragment_success_button_add_productEDIT).setOnClickListener(){
-            item.isFile = isFile
-            item.itemPicture = imageUrl
-            item.brand = requireView().findViewById<TextInputLayout>(R.id.editTextTextProductCompanyEdit).editText!!.text.toString()
-            item.itemName = requireView().findViewById<TextInputLayout>(R.id.editTextTextProductNameEdit).editText!!.text.toString()
-            item.itemPrice = requireView().findViewById<TextInputLayout>(R.id.editTextTextProductPriceEdit).editText!!.text.toString().toDouble()
-            findNavController().navigate(R.id.action_singleItemFragment_to_nav_items)
+            try {
+                item.isFile = isFile
+                item.itemPicture = imageUrl
+                item.brand =
+                    requireView().findViewById<TextInputLayout>(R.id.editTextTextProductCompanyEdit).editText!!.text.toString()
+                item.itemName =
+                    requireView().findViewById<TextInputLayout>(R.id.editTextTextProductNameEdit).editText!!.text.toString()
+                item.itemPrice =
+                    requireView().findViewById<TextInputLayout>(R.id.editTextTextProductPriceEdit).editText!!.text.toString()
+                        .toDouble()
+                findNavController().navigate(R.id.action_singleItemFragment_to_nav_items)
+            }
+            catch (e: Exception){
+                Toast.makeText(requireContext(), "Please make sure you fill out all fields", Toast.LENGTH_SHORT).show()
+            }
         }
 
 

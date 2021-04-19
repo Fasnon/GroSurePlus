@@ -285,7 +285,11 @@ class TripsFragment() : Fragment() {
                             0.toDouble(), "", mutableListOf<ItemInTrip>()))
                     updateAdapterForDate(it)
                     var t = trips.keys
-                    myViewModel.events.clear()
+                    for (e in myViewModel.events){
+                        if (e.user == myViewModel.currentUser.value!!){
+                            myViewModel.events.remove(e)
+                        }
+                    }
                     for (date in t) {
                         if (trips.get(date) != null) {
                             for (m in trips.get(date)!!) {
@@ -307,7 +311,11 @@ class TripsFragment() : Fragment() {
         updateAdapterForDate(date)
         val myViewModel: GroSureViewModel by activityViewModels()
         var t = trips.keys
-        myViewModel.events.clear()
+        for (e in myViewModel.events){
+            if (e.user == myViewModel.currentUser.value!!){
+                myViewModel.events.remove(e)
+            }
+        }
         for (date in t){
             if (trips.get(date) != null) {
                 for (m in trips.get(date)!!) {
@@ -321,7 +329,12 @@ class TripsFragment() : Fragment() {
 
     private fun updateAdapterForDate(date: LocalDate) {
         eventsAdapter.apply {
-            trips.clear()
+            val myViewModel: GroSureViewModel by activityViewModels()
+            for (e in myViewModel.events){
+                if (e.user == myViewModel.currentUser.value!!){
+                    myViewModel.events.remove(e)
+                }
+            }
             trips.addAll(this@TripsFragment.trips[date].orEmpty())
             notifyDataSetChanged()
         }

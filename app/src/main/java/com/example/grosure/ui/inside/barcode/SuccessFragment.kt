@@ -178,13 +178,15 @@ class SuccessFragment : Fragment() {
 
 
                             if ("image_url" in availableFields) {
-                                Picasso.get().load(jsonObject.getString("image_url").toString())
-                                    .into(requireView().findViewById<ImageView>(R.id.productImage))
-
-                                imageUrl = jsonObject.getString("image_url")
                                 if (jsonObject.getString("image_url") == "") {
-                                    Picasso.get().load(imageUrl.toString())
-                                        .into(requireView().findViewById<ImageView>(R.id.productImage))
+                                    Picasso.get().load(R.drawable.index)
+                                            .into(requireView().findViewById<ImageView>(R.id.productImage))
+                                }
+                                else {
+                                    Picasso.get().load(jsonObject.getString("image_url").toString())
+                                            .into(requireView().findViewById<ImageView>(R.id.productImage))
+
+                                    imageUrl = jsonObject.getString("image_url")
                                 }
                             } else {
                                 requireView().findViewById<ImageView>(R.id.productImage)

@@ -39,6 +39,7 @@ import com.example.grosure.R
 import com.example.grosure.model.Item
 import com.example.grosure.model.Trip
 import com.example.grosure.model.User
+import com.example.grosure.ui.OnboardingActivity
 import com.squareup.picasso.Picasso
 import org.w3c.dom.Text
 import java.io.File
@@ -52,6 +53,7 @@ class ProfileFragment : Fragment(){
     private lateinit var imageView: ImageView
     lateinit var currentPhotoPath: String
     private lateinit var navController: NavController
+    lateinit var profileUsername: TextView
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -79,6 +81,7 @@ class ProfileFragment : Fragment(){
         super.onViewCreated(view, savedInstanceState)
 
         navController = findNavController()
+        profileUsername = requireView().findViewById(R.id.userIDTextView)
 
 
         val model: GroSureViewModel by activityViewModels()
@@ -161,7 +164,9 @@ class ProfileFragment : Fragment(){
 
 
         requireView().findViewById<Button>(R.id.infoBtn2).setOnClickListener{
-//            navController.navigate(R.id.action_profileFragment_to_infoFragment2)
+
+            var i = Intent(requireContext(), OnboardingActivity::class.java)
+            startActivity(i)
         }
 
         requireView().findViewById<Button>(R.id.changeUsernameBtn).setOnClickListener {onChangeUsername(view) }
@@ -216,12 +221,9 @@ class ProfileFragment : Fragment(){
     //                val myBitmap = BitmapFactory.decodeFile(currentPhotoPath)
     //                        imageView.setImageBitmap(myBitmap)
                 val model: GroSureViewModel by activityViewModels()
-                var temp = model.currentUser.value!!
-                var temp2 = User(model.currentUser.value!!.username, model.currentUser.value!!.password, currentPhotoPath, model.currentUser.value!!.notifs)
-                model.userList.value!!.remove(temp)
-                model.userList.value!!.add(temp2)
-                model.currentUser.value = temp2
+                model.currentUser.value!!.profilePicture = currentPhotoPath
                 writeUsers()
+                writeItems()
                 var mediaScanIntent = Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE)
                 var contentUri = Uri.fromFile(f)
                 mediaScanIntent.setData(contentUri)
@@ -239,12 +241,9 @@ class ProfileFragment : Fragment(){
     //                val myBitmap = BitmapFactory.decodeFile(currentPhotoPath)
     //                        imageView.setImageBitmap(myBitmap)
                 val model: GroSureViewModel by activityViewModels()
-                var temp = model.currentUser.value!!
-                var temp2 = User(model.currentUser.value!!.username, model.currentUser.value!!.password, currentPhotoPath, model.currentUser.value!!.notifs)
-                model.userList.value!!.remove(temp)
-                model.userList.value!!.add(temp2)
-                model.currentUser.value = temp2
+                model.currentUser.value!!.profilePicture = currentPhotoPath
                 writeUsers()
+                writeItems()
             }
 
         }
@@ -337,7 +336,7 @@ class ProfileFragment : Fragment(){
     }
     private fun onChangeUsername(view: View) {
         val taskEditText = EditText(view.context)
-        taskEditText.inputType = InputType.TYPE_CLASS_TEXT.or(InputType.TYPE_TEXT_VARIATION_PASSWORD)
+        taskEditText.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
         taskEditText.transformationMethod = PasswordTransformationMethod.getInstance()
 
         val dialog = AlertDialog.Builder(view.context)
@@ -389,14 +388,8 @@ class ProfileFragment : Fragment(){
                                         dialog.dismiss()
                                     }.create().show()
                         } else {
-
-                            temp.username = task
-                            while (model.userList.value!!.contains(model.currentUser.value!!)) {
-                                model.userList.value!!.remove(model.currentUser.value!!)
-                            }
-                            model.currentUser.value = temp
-                            model.userList.value!!.add(temp)
-                            dialog.dismiss()
+                            model.currentUser.value!!.username = task
+                            profileUsername.text = task
                             Toast.makeText(requireContext(), "Username has been changed to ${model.currentUser.value!!.username}", Toast.LENGTH_LONG).show()
                             writeItems()
                             writeTrips()
@@ -436,7 +429,7 @@ class ProfileFragment : Fragment(){
         writeItems()
         writeTrips()
         writeUsers()
-        navController!!.navigate(R.id.action_profileFragment_to_enterFragment)
+        navController.navigate(R.id.action_profileFragment_to_enterFragment)
 
     }
     private fun writeItems(){
@@ -444,11 +437,11 @@ class ProfileFragment : Fragment(){
             val myViewModel: GroSureViewModel by activityViewModels()
             val fOut = requireContext().openFileOutput("items", Context.MODE_PRIVATE)
             for (a: Item in myViewModel.itemList.value!!) {
-
-                if (a.user in myViewModel.userList.value!!) {
-
+                for (mfa in myViewModel.userList.value!!){
+                    if (a.user.username == mfa.username){
                         fOut.write((a.itemName + "," + a.brand + "," + a.itemPrice.toString() + "," + a.itemPicture.toString() +"," + a.isFile.toString() + "," + a.user.username +"\n").toByteArray())
                     }
+                }
             }
             if (myViewModel.itemList.value!!.isEmpty()){
                 fOut.write("".toByteArray())

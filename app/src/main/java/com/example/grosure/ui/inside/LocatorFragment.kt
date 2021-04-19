@@ -46,6 +46,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.google.android.material.textfield.TextInputLayout
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.coroutineScope
@@ -75,7 +76,7 @@ class LocatorFragment : Fragment(), OnMapReadyCallback{
         pins = mutableListOf()
         val a  = AlertDialog.Builder(requireContext())
         a.setTitle("NOTE: THIS FEATURE IS JUST A PROOF OF CONCEPT")
-        a.setMessage("There are numerous issues regarding the time required for loading of data from the API, hence only the first 50 stores in the API are loaded. \n\nPlease excuse the wait times.")
+        a.setMessage("There are numerous issues regarding the time required for loading of data from the API, hence only the first 40 stores in the API are loaded. \n\nPlease excuse the wait times.")
         a.show()
 
         // Construct a PlacesClient
@@ -175,7 +176,7 @@ class LocatorFragment : Fragment(), OnMapReadyCallback{
                         val storeList = storeListParent.getJSONArray("records")
 
                         var geocode = Geocoder(requireContext())
-                        for (t in 0 until 50-1){
+                        for (t in 0 until 40-1){
                             Log.i("store", storeList.getJSONObject(t).toString())
                             lifecycleScope.launch{
                                 var m = geocode.getFromLocationName(storeList.getJSONObject(t).getString("premise_address"), 1)
@@ -192,6 +193,8 @@ class LocatorFragment : Fragment(), OnMapReadyCallback{
                         pins.add(bruh)
                         mMap.addMarker(bruh)
                     }
+
+                    requireView().findViewById<LinearProgressIndicator>(R.id.progressIndicator).visibility = View.GONE
 
 
                 }
@@ -240,7 +243,7 @@ class LocatorFragment : Fragment(), OnMapReadyCallback{
     }
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED){
-            mMap.isMyLocationEnabled = true
+                mMap.isMyLocationEnabled = true
             mMap.moveCamera(CameraUpdateFactory.newLatLng(userLocation))
 
             }

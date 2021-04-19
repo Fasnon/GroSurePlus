@@ -76,33 +76,41 @@ class ManualAddFragment : Fragment() {
 
         requireView().findViewById<Button>(R.id.fragment_success_button_add_productManual)
             .setOnClickListener {
-                Log.i(
-                    "a",
-                    requireView().findViewById<TextInputLayout>(R.id.editTextTextProductPriceManual).editText!!.toString()
-                )
-                model.currentUserItems.value!! += (Item(
-                    requireView().findViewById<TextInputLayout>(
-                        R.id.editTextTextProductNameManual
-                    ).editText!!.text.toString(),
-                    requireView().findViewById<TextInputLayout>(R.id.editTextTextProductCompanyManual).editText!!.text.toString(),
-                    requireView().findViewById<TextInputLayout>(R.id.editTextTextProductPriceManual).editText!!.text.toString()
-                        .toDouble(),
-                    imageUrl.toString(),
-                    isFile,
-                    model.currentUser.value!!
-                ))
-                model.itemList.value!! += (Item(
-                    requireView().findViewById<TextInputLayout>(R.id.editTextTextProductNameManual).editText!!.text.toString(),
-                    requireView().findViewById<TextInputLayout>(R.id.editTextTextProductCompanyManual).editText!!.text.toString(),
-                    requireView().findViewById<TextInputLayout>(R.id.editTextTextProductPriceManual).editText!!.text.toString()
-                        .toDouble(),
-                    imageUrl.toString(),
-                    isFile,
-                    model.currentUser.value!!
-                ))
-                findNavController().navigate(R.id.action_manualAddFragment_to_nav_items)
+                try {
+                    Log.i(
+                        "a",
+                        requireView().findViewById<TextInputLayout>(R.id.editTextTextProductPriceManual).editText!!.toString()
+                    )
+                    model.currentUserItems.value!! += (Item(
+                        requireView().findViewById<TextInputLayout>(
+                            R.id.editTextTextProductNameManual
+                        ).editText!!.text.toString(),
+                        requireView().findViewById<TextInputLayout>(R.id.editTextTextProductCompanyManual).editText!!.text.toString(),
+                        requireView().findViewById<TextInputLayout>(R.id.editTextTextProductPriceManual).editText!!.text.toString()
+                            .toDouble(),
+                        imageUrl.toString(),
+                        isFile,
+                        model.currentUser.value!!
+                    ))
+                    model.itemList.value!! += (Item(
+                        requireView().findViewById<TextInputLayout>(R.id.editTextTextProductNameManual).editText!!.text.toString(),
+                        requireView().findViewById<TextInputLayout>(R.id.editTextTextProductCompanyManual).editText!!.text.toString(),
+                        requireView().findViewById<TextInputLayout>(R.id.editTextTextProductPriceManual).editText!!.text.toString()
+                            .toDouble(),
+                        imageUrl.toString(),
+                        isFile,
+                        model.currentUser.value!!
+                    ))
+                    findNavController().navigate(R.id.action_manualAddFragment_to_nav_items)
 
+                }
+
+                catch (e: Exception) {
+                Toast.makeText(requireContext(), "Please fill out all fields", Toast.LENGTH_SHORT).show()
+
+                }
             }
+
 
         imageView.setOnClickListener() {
 

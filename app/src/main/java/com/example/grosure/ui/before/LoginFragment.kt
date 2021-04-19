@@ -50,76 +50,78 @@ class LoginFragment: Fragment() , View.OnClickListener {
                 val myViewModel: GroSureViewModel by activityViewModels()
                 var accountRegistered = false
                 var correspondingAccount = User("dummy", "dummy", "dummy", false)
+                try {
 
-                for (t in myViewModel.userList.value!!){
+                    for (t in myViewModel.userList.value!!) {
 
-                    if (requireView().findViewById<TextInputLayout>(R.id.editTextTextPersonNameLogin).editText!!.text.toString() == t.username) {
-                        accountRegistered = true
-                        correspondingAccount = t
+                        if (requireView().findViewById<TextInputLayout>(R.id.editTextTextPersonNameLogin).editText!!.text.toString() == t.username) {
+                            accountRegistered = true
+                            correspondingAccount = t
+                        }
+                    }
+                    if (!accountRegistered) {
+                        requireView().findViewById<TextView>(R.id.warningTextLogin).text = "No such account found, check your username again."
+
+                    } else if (requireView().findViewById<TextInputLayout>(R.id.editTextTextPasswordLogin).editText!!.text.toString() != correspondingAccount.password) {
+                        requireView().findViewById<TextView>(R.id.warningTextLogin).text = "Wrong password, check again."
+
+
+                    } else {
+                        myViewModel.currentUser.value = correspondingAccount
+                        myViewModel.currentUserItems.value = mutableListOf<Item>()
+                        myViewModel.loggedIn.value = true
+                        navController.navigate(R.id.action_loginFragment_to_inFragment)
+                        for (t in myViewModel.itemList.value!!) {
+                            if (t.user.username == correspondingAccount.username) {
+                                myViewModel.currentUserItems.value!!.add(t)
+                            }
+                        }
+
+                        val nameObserver = Observer<MutableList<User>> { newName ->
+                            try {
+                                val fOut = requireContext().openFileOutput("users", Context.MODE_PRIVATE)
+                                if (myViewModel.loggedIn.value!!) {
+                                    fOut.write(("true" + "," + myViewModel.currentUser.value!!.username + "\n").toByteArray())
+                                } else {
+                                    fOut.write(("false" + ",\n").toByteArray())
+                                }
+
+                                for (a: User in myViewModel.userList.value!!) {
+                                    fOut.write((a.username + "," + a.password + "," + a.profilePicture + "," + a.notifs.toString() + "\n").toByteArray())
+                                }
+                                fOut.close()
+                                Log.i("Writing informations", "Login")
+                            } catch (e: Exception) {
+                            }
+                        }
+                        val nameObserver2 = Observer<Boolean> { newName ->
+                            try {
+                                val fOut = requireContext().openFileOutput("users", Context.MODE_PRIVATE)
+                                if (myViewModel.loggedIn.value!!) {
+                                    fOut.write(("true" + "," + myViewModel.currentUser.value!!.username + "\n").toByteArray())
+                                } else {
+                                    fOut.write(("false" + ",\n").toByteArray())
+                                }
+
+                                for (a: User in myViewModel.userList.value!!) {
+                                    fOut.write((a.username + "," + a.password + "," + a.profilePicture + "," + a.notifs.toString() + "\n").toByteArray())
+                                }
+                                fOut.close()
+                                Log.i("Writing informations", "Login")
+                            } catch (e: Exception) {
+                            }
+                        }
+                        myViewModel.userList.observe(viewLifecycleOwner, nameObserver)
+                        myViewModel.loggedIn.observe(viewLifecycleOwner, nameObserver2)
+
+
                     }
                 }
-                if (!accountRegistered){
-                    requireView().findViewById<TextView>(R.id.warningTextLogin).text = "No such account found, check your username again."
-
-                }
-                else if(requireView().findViewById<TextInputLayout>(R.id.editTextTextPasswordLogin).editText!!.text.toString() != correspondingAccount.password){
-                    requireView().findViewById<TextView>(R.id.warningTextLogin).text = "Wrong password, check again."
-
-
-                }
-                else{
-                    myViewModel.currentUser.value = correspondingAccount
-                    myViewModel.currentUserItems.value = mutableListOf<Item>()
-                    myViewModel.loggedIn.value = true
-                    navController.navigate(R.id.action_loginFragment_to_inFragment)
-                    for (t in myViewModel.itemList.value!!){
-                        if (t.user.username == correspondingAccount.username){
-                            myViewModel.currentUserItems.value!!.add(t)
-                        }
-                    }
-
-                    val nameObserver = Observer<MutableList<User>> { newName ->
-                        try {
-                            val fOut = requireContext().openFileOutput("users", Context.MODE_PRIVATE)
-                            if (myViewModel.loggedIn.value!!) {
-                                fOut.write(("true" +"," +  myViewModel.currentUser.value!!.username +"\n").toByteArray())
-                            } else {
-                                fOut.write(("false" +",\n").toByteArray())
-                            }
-
-                            for (a: User in myViewModel.userList.value!!) {
-                                fOut.write((a.username + "," + a.password + "," + a.profilePicture + "," + a.notifs.toString() +"\n").toByteArray())
-                            }
-                            fOut.close()
-                            Log.i("Writing informations", "Login")
-                        }
-                        catch (e : Exception){
-                        }
-                    }
-                    val nameObserver2 = Observer<Boolean> { newName ->
-                        try {
-                            val fOut = requireContext().openFileOutput("users", Context.MODE_PRIVATE)
-                            if (myViewModel.loggedIn.value!!) {
-                                fOut.write(("true" +"," +  myViewModel.currentUser.value!!.username +"\n").toByteArray())
-                            } else {
-                                fOut.write(("false" +",\n").toByteArray())
-                            }
-
-                            for (a: User in myViewModel.userList.value!!) {
-                                fOut.write((a.username + "," + a.password + "," + a.profilePicture + "," + a.notifs.toString() +"\n").toByteArray())
-                            }
-                            fOut.close()
-                            Log.i("Writing informations", "Login")
-                        }
-                        catch (e : Exception){
-                        }
-                    }
-                    myViewModel.userList.observe(viewLifecycleOwner, nameObserver)
-                    myViewModel.loggedIn.observe(viewLifecycleOwner, nameObserver2)
-
-
+                catch (e: Exception){
+                    requireView().findViewById<TextView>(R.id.warningTextLogin).text = "User not found."
                 }
             }
+
         }
     }
 }

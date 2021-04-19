@@ -42,7 +42,7 @@
         android:layout_marginStart="32dp"
         android:textSize="18sp"
         android:textColor="#000000"
-        android:text="Identity number (IC):"
+        android:text="Username:"
         />
 
     <com.google.android.material.textfield.TextInputLayout
@@ -145,7 +145,7 @@
         android:layout_alignParentStart="true"
         android:layout_marginStart="33dp"
         android:layout_marginTop="28dp"
-        android:text="TextView"
+        android:text=""
         android:textColor="#FF0000" />
 
 

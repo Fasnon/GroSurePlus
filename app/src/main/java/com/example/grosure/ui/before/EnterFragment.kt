@@ -2,6 +2,7 @@ package com.example.grosure.ui.before
 
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -20,6 +21,7 @@ import com.example.grosure.GroSureViewModel
 import com.example.grosure.R
 import com.example.grosure.databinding.FragmentEnterBinding
 import com.example.grosure.model.User
+import com.example.grosure.ui.OnboardingActivity
 import java.lang.Exception
 
 
@@ -41,7 +43,7 @@ class EnterFragment: Fragment() , View.OnClickListener {
         navController = Navigation.findNavController(view)
         fragmentEnterBinding.loginBtn.setOnClickListener(this)
         fragmentEnterBinding.registerBtn.setOnClickListener(this)
-        val myViewModel: GroSureViewModel by activityViewModels()
+        fragmentEnterBinding.infoBtn.setOnClickListener(this)
 
         activity?.onBackPressedDispatcher?.addCallback(viewLifecycleOwner, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -55,6 +57,10 @@ class EnterFragment: Fragment() , View.OnClickListener {
         when (v!!.id) {
             R.id.loginBtn -> navController.navigate(R.id.action_enterFragment_to_loginFragment)
             R.id.registerBtn -> navController.navigate(R.id.action_enterFragment_to_registerFragment)
+            R.id.infoBtn -> {
+                val i = Intent(requireContext(), OnboardingActivity::class.java)
+                startActivity(i)
+            }
         }
     }
 }

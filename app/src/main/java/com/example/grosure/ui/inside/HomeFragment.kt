@@ -158,7 +158,7 @@ class HomeFragment : Fragment() {
                 requireView().findViewById<TextView>(R.id.mostUsedItemTV).text  = "The item you buy the most is " + mostQ!!.item.itemName
             if (mostC != null)
                 requireView().findViewById<TextView>(R.id.mostSpentItemTV).text  = "You've spent the most on ${mostC!!.item.itemName}, at ${String.format("$%.2f", mostC!!.price)}"
-            requireView().findViewById<TextView>(R.id.thisWeekVsLastWeekTV).text = "You’ve spent ${String.format("%.2f", moneyOneWeek)} this week as compared to ${String.format("%.2f", moneyTwoWeek)} last week, which is a ${String.format("%02.2f", moneyOneWeek/moneyTwoWeek*100)}% increase."
+            requireView().findViewById<TextView>(R.id.thisWeekVsLastWeekTV).text = "You’ve spent ${String.format("$%.2f", moneyOneWeek)} this week as compared to ${String.format("$%.2f", moneyTwoWeek)} last week, which is a ${String.format("%02.2f", moneyOneWeek/moneyTwoWeek*100)}% change."
         }
         super.onViewCreated(view, savedInstanceState)
 

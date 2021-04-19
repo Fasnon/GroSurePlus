@@ -2,25 +2,22 @@ package com.example.grosure
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.TextView
 import androidx.activity.viewModels
-import androidx.lifecycle.LifecycleOwner
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import com.example.grosure.model.Item
 import com.example.grosure.model.ItemInTrip
 import com.example.grosure.model.Trip
 import com.example.grosure.model.User
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.example.grosure.ui.OnboardingActivity
 import com.google.firebase.auth.FirebaseAuth
-import java.text.DateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
-import java.util.Scanner
+import java.util.*
+
 
 class MainActivity : AppCompatActivity(){
     private val auth = FirebaseAuth.getInstance()
@@ -30,10 +27,7 @@ class MainActivity : AppCompatActivity(){
         setContentView(R.layout.activity_main)
         supportActionBar!!.hide()
 
-        var gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
-                .requestEmail()
-                .build()
+
 
 
         val myViewModel: GroSureViewModel by viewModels()
@@ -249,6 +243,74 @@ class MainActivity : AppCompatActivity(){
             }
             myViewModel.currentUserItems.value = tempList
         }
+
+
+        val PREFS_NAME = "MyPrefsFile"
+        val PREF_VERSION_CODE_KEY = "version_code"
+        val DOESNT_EXIST = -1
+
+        // Get current version code
+
+        // Get current version code
+        val currentVersionCode = BuildConfig.VERSION_CODE
+
+        // Get saved version code
+
+        // Get saved version code
+        val prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        val savedVersionCode = prefs.getInt(PREF_VERSION_CODE_KEY, DOESNT_EXIST)
+
+        // Check for first run or upgrade
+
+        // Check for first run or upgrade
+        if (currentVersionCode == savedVersionCode) {
+
+
+            if (myViewModel.loggedIn.value!!){
+                try {
+
+                    findNavController(R.id.navHostFragment).navigate(R.id.action_enterFragment_to_inFragment)
+                }
+                catch (e: Exception){
+
+                    try {
+
+                        findNavController(R.id.navHostFragment).navigate(R.id.action_enterFragment_to_inFragment)
+                    }
+                    catch (e: Exception){
+
+                    }
+                }
+            }
+            return
+        } else if (savedVersionCode == DOESNT_EXIST) {
+
+            val i = Intent(this, OnboardingActivity::class.java)
+            startActivity(i)
+        } else if (currentVersionCode > savedVersionCode) {
+
+
+            if (myViewModel.loggedIn.value!!){
+                try {
+
+                    findNavController(R.id.navHostFragment).navigate(R.id.action_enterFragment_to_inFragment)
+                }
+                catch (e: Exception){
+
+                    try {
+
+                        findNavController(R.id.navHostFragment).navigate(R.id.action_enterFragment_to_inFragment)
+                    }
+                    catch (e: Exception){
+
+                    }
+                }
+            }
+        }
+
+        prefs.edit().putInt(PREF_VERSION_CODE_KEY, currentVersionCode).apply()
+
+
 
         if (myViewModel.loggedIn.value!!){
             try {

@@ -65,6 +65,7 @@
             android:layout_width="match_parent"
             android:id="@+id/storesRV"
             android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
             android:layout_height="wrap_content"/>
 
     <TextView
@@ -94,7 +95,7 @@
                 android:layout_height="225dp"
                 android:layout_width="175dp"
                 android:layout_marginLeft="16dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="16dp"
                 app:flipOnTouch="true"
                 app:flipEnabled="true"
                 app:flipDuration="400"
@@ -153,7 +154,7 @@
                 android:layout_alignParentRight="true"
                 app:flipOnTouch="true"
                 android:layout_marginRight="16dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="16dp"
                 app:flipEnabled="true"
                 app:flipDuration="400"
                 android:id="@+id/mostExpensiveCardFlip"

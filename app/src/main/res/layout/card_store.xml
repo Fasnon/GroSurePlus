@@ -2,9 +2,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="20dp"
-    app:strokeWidth="1dp"
     android:layout_marginLeft="4dp"
-    app:strokeColor="@color/black"
     app:cardBackgroundColor="#eac4ff"
     android:layout_width="120dp"
     android:layout_height="160dp">
