@@ -28,6 +28,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.grosure.GroSureViewModel
 import com.example.grosure.MainActivity
 import com.example.grosure.R
+import com.example.grosure.model.Item
+import com.example.grosure.model.ItemInTrip
 import com.example.grosure.model.Trip
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.time.LocalDate
@@ -207,10 +209,12 @@ class SingleTripFragment : Fragment(){
             val dpd = DatePickerDialog(requireContext(), DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
                 // Display Selected date in TextView
                 if (trip!= null) {
-                    var clone = Trip(trip!!.text +" 2", trip!!.date, trip!!.user, trip!!.price, trip!!.time, trip!!.itemList)
-                    var sdf = DateTimeFormatter.ofPattern("dd/MM/yyyy")
-                    var ld = LocalDate.parse("${String.format("%02d", dayOfMonth)}/${String.format("%02d", monthOfYear+1)}/${year}", sdf)
-                    clone.date = ld
+                    val itemListCopy = mutableListOf<ItemInTrip>()
+                    for (i in trip!!.itemList){
+                        itemListCopy.add(ItemInTrip(i.item, i.number))
+                    }
+                    val sdf = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+                    val clone = Trip(trip!!.text +" 2", LocalDate.parse("${String.format("%02d", dayOfMonth)}/${String.format("%02d", monthOfYear+1)}/${year}", sdf) , trip!!.user, trip!!.price, trip!!.time, itemListCopy)
                     model.events.add(clone)
                     writeTrips()
                     Toast.makeText(requireContext(), "Trip cloned to ${dayOfMonth}/${monthOfYear+1}", Toast.LENGTH_SHORT).show()

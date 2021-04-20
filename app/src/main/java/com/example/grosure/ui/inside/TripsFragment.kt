@@ -271,35 +271,19 @@ class TripsFragment() : Fragment() {
         else {
             selectedDate?.let {
                 val myViewModel: GroSureViewModel by activityViewModels()
-                var sameName = false
-                for (events in myViewModel.events) {
-                    if (events.date == selectedDate!!) {
-                        if (events.text == text) {
-                            sameName = true
-                        }
-                    }
+                trips[it] = trips[it].orEmpty().plus(Trip(text, it, myViewModel.currentUser.value!!,
+                    0.toDouble(),"", mutableListOf<ItemInTrip>() ))
+                updateAdapterForDate(it)
+                var t = trips.keys
+                myViewModel.events.removeIf{
+                    it.user  == myViewModel.currentUser.value!!
                 }
-
-                if (!sameName) {
-                    trips[it] = trips[it].orEmpty().plus(Trip(text, it, myViewModel.currentUser.value!!,
-                            0.toDouble(), "", mutableListOf<ItemInTrip>()))
-                    updateAdapterForDate(it)
-                    var t = trips.keys
-                    for (e in myViewModel.events){
-                        if (e.user == myViewModel.currentUser.value!!){
-                            myViewModel.events.remove(e)
+                for (date in t){
+                    if (trips.get(date) != null) {
+                        for (m in trips.get(date)!!) {
+                            myViewModel.events.add(m)
                         }
                     }
-                    for (date in t) {
-                        if (trips.get(date) != null) {
-                            for (m in trips.get(date)!!) {
-                                myViewModel.events.add(m)
-                            }
-                        }
-                    }
-                }
-                else{
-                    Toast.makeText(this.context, "Two events cannot have the same text on the same day.", Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -311,11 +295,10 @@ class TripsFragment() : Fragment() {
         updateAdapterForDate(date)
         val myViewModel: GroSureViewModel by activityViewModels()
         var t = trips.keys
-        for (e in myViewModel.events){
-            if (e.user == myViewModel.currentUser.value!!){
-                myViewModel.events.remove(e)
-            }
+        myViewModel.events.removeIf{
+            it.user  == myViewModel.currentUser.value!!
         }
+
         for (date in t){
             if (trips.get(date) != null) {
                 for (m in trips.get(date)!!) {
@@ -329,11 +312,9 @@ class TripsFragment() : Fragment() {
 
     private fun updateAdapterForDate(date: LocalDate) {
         eventsAdapter.apply {
-            val myViewModel: GroSureViewModel by activityViewModels()
-            for (e in myViewModel.events){
-                if (e.user == myViewModel.currentUser.value!!){
-                    myViewModel.events.remove(e)
-                }
+            val model:GroSureViewModel by activityViewModels()
+            trips.removeIf{
+                it.user  == model.currentUser.value!!
             }
             trips.addAll(this@TripsFragment.trips[date].orEmpty())
             notifyDataSetChanged()

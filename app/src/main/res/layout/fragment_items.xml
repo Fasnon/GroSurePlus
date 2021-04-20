@@ -17,6 +17,7 @@
 
         android:textColor="@color/black"
         android:text="Items"/>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/itemsFAB"
 
